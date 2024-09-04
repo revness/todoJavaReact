@@ -2,25 +2,6 @@
 This is a full stack todoApp with a front end written in React and Typescript and a backend REST Api written in Java Spring
 
 
-## Backend
-
-## Key features
-- Deleting a task should set an `isArchived` flag in the database instead of deleting the task from the database
-- Add a filter to the frontend application that allows you to filter tasks by category
-- Categories and Todos should be stored in separate tables
-
-## Endpoints
-- `GET /categories`
-- `POST /categories`
-- `PUT /categories/:id`
-- `DELETE /categories/:id`
-
-- `GET /todos`
-- `GET /todos?category={}`
-- `POST /todos`
-- `PUT/PATCH /todos/:id`
-- `DELETE /todos/:id`
-
 
 
 
@@ -40,4 +21,6 @@ This is a full stack todoApp with a front end written in React and Typescript an
 -   Create a summary section that lists how many of each type of task there are
 
 ## Changelog
-- 28/8/24 backend initialised
+- 2/9/24 backend initialised
+
+

@@ -1,4 +1,3 @@
-// import { CategoryFormData } from "../components/CategoryForm/schema";
 import { TodoItemResponse } from "./todo-item-services";
 
 const baseUrl = import.meta.env.VITE_APP_API_BASE_URL;
@@ -18,19 +17,19 @@ export interface Category {
   name: string;
 }
 
-// export const createCategory = async (data: CategoryFormData) => {
-//   const response = await fetch(`${baseUrl}/categories`, {
-//     method: "POST",
-//     body: JSON.stringify(data),
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   });
-//   if (!response.ok) {
-//     throw new Error("Failed to post category");
-//   }
-//   return (await response.json()) as CategoryResponse;
-// };
+export const createCategory = async (data: CategoryFormData) => {
+  const response = await fetch(`${baseUrl}/categories`, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    throw new Error("Failed to post category");
+  }
+  return (await response.json()) as CategoryResponse;
+};
 
 export const getAllCategories = async () => {
   const response = await fetch(`${baseUrl}/categories`);
@@ -39,21 +38,3 @@ export const getAllCategories = async () => {
   }
   return (await response.json()) as CategoryResponse[];
 };
-
-// export const updateCategoryById = async (
-//   id: number,
-//   data: CategoryFormData
-// ) => {
-//   const response = await fetch(`${baseUrl}/categories/${id}`, {
-//     method: "PATCH",
-//     body: JSON.stringify(data),
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   });
-//   if (!response.ok) {
-//     console.log(response);
-//     throw new Error("Failed to update category");
-//   }
-//   return (await response.json()) as CategoryResponse;
-// };

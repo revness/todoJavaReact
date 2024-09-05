@@ -77,7 +77,11 @@ export const createTodo = async (data: TodoFormData) => {
 export const editTodo = async (data: TodoFormData, id: number) => {
   const response = await fetch(baseURL + `/todoitems/${id}`, {
     method: "PATCH",
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+      title: data.title,
+      content: data.content,
+      categoryId: data.category.id,
+    }),
     headers: {
       "Content-Type": "application/json",
     },

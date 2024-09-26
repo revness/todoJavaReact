@@ -72,31 +72,29 @@ const EditTodoItemsPage = () => {
 
   //implement error handling in this page too, show error too.
   return (
-    <>
-      <div className="flex justify-center">
-        <div>
-          <button
-            className="flex justify-center items-center"
-            onClick={() => navigate(-1)}
-          >
-            <Rewind size={32} /> Go back
-          </button>
-          <h1 className=" text-lg  font-bold">Edit TODO</h1>
-          {defaultValues ? (
-            <TodoForm
-              onSubmit={onSubmit}
-              defaultValues={defaultValues}
-              type="EDIT"
-              categories={categoryValues}
-            />
-          ) : (
-            <p>Loading...</p>
-          )}
+    <div className="flex justify-center dark:text-white m-2">
+      <div>
+        <button
+          className="flex justify-center items-center"
+          onClick={() => navigate(-1)}
+        >
+          <Rewind size={32} /> Go back
+        </button>
+        <h1 className=" text-lg  font-bold">Edit TODO</h1>
+        {defaultValues ? (
+          <TodoForm
+            onSubmit={onSubmit}
+            defaultValues={defaultValues}
+            type="EDIT"
+            categories={categoryValues}
+          />
+        ) : (
+          <p>Loading...</p>
+        )}
 
-          {fetchStatus == "FAILURE" && <h1>{error?.message}</h1>}
-        </div>
+        {fetchStatus == "FAILURE" && <h1>{error?.message}</h1>}
       </div>
-    </>
+    </div>
   );
 };
 

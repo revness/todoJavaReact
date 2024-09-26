@@ -1,22 +1,19 @@
 import { useForm, Controller } from "react-hook-form";
 import { TodoFormData, schema } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Category } from "../../services/category-services";
+import { CategoryResponse } from "../../services/category-services";
 import { useEffect } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 type FormType = "CREATE" | "EDIT";
 interface TodoFormProps {
   onSubmit: (data: TodoFormData) => unknown;
   defaultValues?: TodoFormData;
   type: FormType;
-  categories?: Category[];
+  categories?: CategoryResponse[];
 }
-const TodoForm = ({
-  onSubmit,
-  defaultValues,
-  type,
-  categories = [],
-}: TodoFormProps) => {
+const TodoForm = ({ onSubmit, defaultValues, type }: TodoFormProps) => {
   const {
     reset,
     register,
@@ -33,13 +30,21 @@ const TodoForm = ({
     }
   }, [isSubmitSuccessful, reset]);
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="title">Title</label>
-        <input id="title" type="text" {...register("title")} />
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="dark:text-black flex flex-col border-2 p-2 w-96"
+    >
+      <div className="p-1 ">
+        <input
+          id="title"
+          type="text"
+          {...register("title")}
+          placeholder="Task Name"
+          className="placeholder:text-slate-400 w-full"
+        />
         {errors?.title && <small>{errors.title.message}</small>}
       </div>
-      <div>
+      {/* <div>
         <label htmlFor="category">Category</label>
         <Controller
           name="category"
@@ -66,19 +71,45 @@ const TodoForm = ({
           )}
         />
         {errors?.category && <small>{errors.category.message}</small>}
+      </div> */}
+      <div className="p-1">
+        <Controller
+          control={control}
+          name="dueDate"
+          render={({ field }) => (
+            <DatePicker
+              id="dueDate"
+              onChange={(date) => field.onChange(date)}
+              selected={field.value}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={5}
+              dateFormat="yyyy-MM-dd HH:mm:ss"
+              placeholderText="Due Date"
+              className="placeholder:text-slate-400 w-[356px]"
+            />
+          )}
+        />
       </div>
-
-      <div>
-        <label htmlFor="content">Content</label>
-        <textarea {...register("content")} id="content"></textarea>
+      <div className="p-1">
+        <textarea
+          {...register("content")}
+          id="content"
+          placeholder="Task Description"
+          className="w-full resize-none h-20"
+        ></textarea>
         {errors?.content && <small>{errors.content.message}</small>}
       </div>
-      <button
-        type="submit"
-        className=" text-md border border-black border-opacity-85"
-      >
-        {type == "EDIT" ? "Edit" : "Create"} Todo Item
-      </button>
+      <div className="p-1 flex justify-center">
+        <div>
+          <button
+            type="submit"
+            className=" text-md border bg-blue-400 text-black font-medium border-black border-opacity-85 w-48 rounded-md p-1 "
+          >
+            {type == "EDIT" ? "Edit" : "Create"} Todo Item
+          </button>
+        </div>
+      </div>
     </form>
   );
 };

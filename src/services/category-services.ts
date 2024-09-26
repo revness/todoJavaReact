@@ -1,16 +1,8 @@
-import { TodoItemResponse } from "./todo-item-services";
+import { CategoryFormData } from "../components/TodoForm/schema";
 
 const baseUrl = import.meta.env.VITE_APP_API_BASE_URL;
 
 export interface CategoryResponse {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  name: string;
-  todoItems: TodoItemResponse[];
-}
-
-export interface Category {
   id: number;
   createdAt: string;
   updatedAt: string;

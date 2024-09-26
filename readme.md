@@ -22,5 +22,5 @@ This is a full stack todoApp with a front end written in React and Typescript an
 
 ## Changelog
 - 2/9/24 backend initialised
-
-
+-25/9/24 added toast notification for deleting and duplicating todos.
+-25/9/24 added react datepicker for due date function

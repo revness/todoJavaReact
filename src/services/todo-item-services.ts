@@ -1,5 +1,4 @@
 import { TodoFormData } from "../components/TodoForm/schema";
-import { Category } from "./category-services";
 
 const baseURL = import.meta.env.VITE_APP_API_BASE_URL;
 
@@ -12,6 +11,7 @@ export interface TodoItemResponse {
   category: Category;
   deleted: boolean;
   completed: boolean;
+  dueDate: string;
 }
 
 export const getAllTodos = async () => {
@@ -50,12 +50,27 @@ export const deleteTodoById = async (id: number) => {
 };
 
 export const createTodo = async (data: TodoFormData) => {
+  const formatDateForBackend = (date: TodoFormData["dueDate"]) => {
+    if (!date) return null;
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+  };
+  console.log("data.dueDate formatted", formatDateForBackend(data.dueDate));
+
   const response = await fetch(baseURL + "/todoitems", {
     method: "POST",
     body: JSON.stringify({
-      title: data.title + " copy",
-      content: data.content + " copy",
-      categoryId: data.category.id,
+      title: data.title,
+      content: data.content,
+      // categoryId: data.category.id,
+      dueDate: formatDateForBackend(data.dueDate),
     }),
     headers: {
       "Content-Type": "application/json",
@@ -77,7 +92,11 @@ export const createTodo = async (data: TodoFormData) => {
 export const editTodo = async (data: TodoFormData, id: number) => {
   const response = await fetch(baseURL + `/todoitems/${id}`, {
     method: "PATCH",
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+      title: data.title,
+      content: data.content,
+      categoryId: data.category.id,
+    }),
     headers: {
       "Content-Type": "application/json",
     },

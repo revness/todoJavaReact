@@ -4,9 +4,12 @@ import { createTodo } from "../../services/todo-item-services";
 import { TodoFormData } from "../../components/TodoForm/schema";
 import { Rewind } from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
-import { Category, getAllCategories } from "../../services/category-services";
+import {
+  CategoryResponse,
+  getAllCategories,
+} from "../../services/category-services";
 const CreateTodoItemsPage = () => {
-  const [categoryValues, setCategoryValues] = useState<Category[]>();
+  const [categoryValues, setCategoryValues] = useState<CategoryResponse[]>();
 
   const navigate = useNavigate();
   const onSubmit = async (data: TodoFormData) => {
@@ -28,24 +31,22 @@ const CreateTodoItemsPage = () => {
   }, []);
 
   return (
-    <>
-      <div className="flex justify-center">
-        <div>
-          <button
-            className="flex justify-center items-center"
-            onClick={() => navigate(-1)}
-          >
-            <Rewind size={32} /> Go back
-          </button>
-          <h1 className=" text-lg  font-bold">Create a TODO</h1>
-          <TodoForm
-            onSubmit={onSubmit}
-            categories={categoryValues}
-            type="CREATE"
-          />
-        </div>
+    <div className="flex justify-center dark:text-white m-2">
+      <div className="">
+        <button
+          className="flex justify-center items-center"
+          onClick={() => navigate(-1)}
+        >
+          <Rewind size={32} /> Go back
+        </button>
+        <h1 className=" text-lg  font-bold text-center">Create a TODO</h1>
+        <TodoForm
+          onSubmit={onSubmit}
+          categories={categoryValues}
+          type="CREATE"
+        />
       </div>
-    </>
+    </div>
   );
 };
 

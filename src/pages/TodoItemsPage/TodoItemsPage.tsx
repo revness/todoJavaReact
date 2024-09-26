@@ -12,20 +12,22 @@ import { TodoFormData } from "../../components/TodoForm/schema";
 import Toast from "../../components/Toast/Toast";
 
 type FilterType = "all" | "completed" | "toComplete";
+type ToastType = {
+  message: string;
+  type: "success" | "error";
+} | null;
+
+//filter functions
 const filterCompleted = (todos: TodoItemResponse[]) => {
   return todos.filter((todo) => todo.completed);
 };
-
 const filterToComplete = (todos: TodoItemResponse[]) => {
   return todos.filter((todo) => !todo.completed);
 };
 
 const TodoItemsPage = () => {
   const navigate = useNavigate();
-  const [toast, setToast] = useState<{
-    message: string;
-    type: "success" | "error";
-  } | null>(null);
+  const [toast, setToast] = useState<ToastType>(null);
   const [currentFilter, setCurrentFilter] = useState<FilterType>("all");
   const [todos, setTodos] = useState<TodoItemResponse[]>([]);
 
@@ -135,7 +137,7 @@ const TodoItemsPage = () => {
       </div>
       {filteredTodos.length == 0 && (
         <div className="flex justify-center dark:invert">
-          Theres nothing here, please add a Task!
+          Theres nothing here...
         </div>
       )}
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 ">

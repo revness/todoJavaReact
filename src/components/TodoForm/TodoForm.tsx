@@ -13,13 +13,20 @@ interface TodoFormProps {
   type: FormType;
   categories?: CategoryResponse[];
 }
-const TodoForm = ({ onSubmit, defaultValues, type }: TodoFormProps) => {
+const TodoForm = ({
+  onSubmit,
+  defaultValues,
+  type,
+  categories,
+}: TodoFormProps) => {
   const {
     reset,
     register,
     control,
     formState: { errors, isSubmitSuccessful },
     handleSubmit,
+    setValue,
+    watch,
   } = useForm<TodoFormData>({
     resolver: zodResolver(schema),
     defaultValues,
@@ -29,6 +36,15 @@ const TodoForm = ({ onSubmit, defaultValues, type }: TodoFormProps) => {
       reset();
     }
   }, [isSubmitSuccessful, reset]);
+
+  const title = watch("title");
+
+  const handleCategoryClick = (categoryName: string) => {
+    setValue("title", `${title ? `${title} ` : ""}[${categoryName}]`, {
+      shouldValidate: true,
+    });
+  };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -43,6 +59,17 @@ const TodoForm = ({ onSubmit, defaultValues, type }: TodoFormProps) => {
           className="placeholder:text-slate-400 w-full"
         />
         {errors?.title && <small>{errors.title.message}</small>}
+      </div>
+      <div className="flex flex-row flex-wrap overflow-scroll h-20">
+        {categories?.map((category) => (
+          <div
+            key={category.id}
+            className="bg-green-500 rounded-md m-1 p-1 h-8 text-center"
+            onClick={() => handleCategoryClick(category.name)}
+          >
+            {category.name}
+          </div>
+        ))}
       </div>
       {/* <div>
         <label htmlFor="category">Category</label>

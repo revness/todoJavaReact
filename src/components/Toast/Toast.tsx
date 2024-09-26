@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 interface ToastProps {
   message: string;
@@ -7,18 +7,13 @@ interface ToastProps {
 }
 
 const Toast = ({ message, type, onClose }: ToastProps) => {
-  const [visible, setVisible] = useState(true);
-
   useEffect(() => {
     const timer = setTimeout(() => {
-      setVisible(false);
       onClose();
     }, 3000);
 
     return () => clearTimeout(timer);
   }, [onClose]);
-
-  if (!visible) return null;
 
   return (
     <div
